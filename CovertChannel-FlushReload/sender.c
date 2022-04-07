@@ -103,26 +103,6 @@ int main(int argc, char **argv) { // Append to end of arguments " -s filename"
 			}
 		}
 
-		//SEND "EXIT" TO TRIGGER RECIEVER FILE COMPARE 
-
-		sleep(3);
-
-		char filemsg[] = {'e', 'x', 'i', 't', '\0'};
-		msg = string_to_binary(filemsg);
-
-		for (int i = 0; i < 8; i++) {
-			send_bit(sequence[i], &config);
-		}
-
-		msg_len = strlen(msg);
-		for (int ind = 0; ind < msg_len; ind++) {
-			if (msg[ind] == '0') {
-				send_bit(false, &config);
-			} else {
-				send_bit(true, &config);
-			}
-		}
-
 		exit(1);
 	}
 
