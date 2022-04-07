@@ -48,12 +48,15 @@ int main(int argc, char **argv) { // Append to end of arguments " -s filename"
 
 	// Initialize config and local variables
 	struct config config;
-
+	
 	char file_buf[128];
 
 	if(ifFileSend) { //Grabs additional file argument
-		char** new_argv = malloc((argc-1) * sizeof *new_argv);
-		int new_argc = argc - 2;
+		
+		//char** new_argv = malloc((argc-1) * sizeof *new_argv);
+		//int new_argc = argc - 2;
+		
+		/*
 		for(int i = 0; i < new_argc; i++) {
 			size_t length = strlen(argv[i])+1;
         	new_argv[i] = malloc(length);
@@ -68,15 +71,20 @@ int main(int argc, char **argv) { // Append to end of arguments " -s filename"
 			printf("%s ", new_argv[k]);
 			k++;
 		}
-		//printf("\n%s", file_buf);
-
-		init_config(&config, new_argc, new_argv);
+		//
+		*/
+		char* file_name=strtok(argv[0], " ");
+		printf("\n%s", file_name);
+		
+		//init_config(&config, new_argc, new_argv);
+		init_config(&config, argc, argv);
+		
 	} else {
 		init_config(&config, argc, argv);
 	}
 
 	char *str = NULL; // Entire file contents
-
+	/*
 	if(ifFileSend) { // Grabs file for comparison (converts to binary)
 		char buf[4096];
     	ssize_t n;
@@ -100,15 +108,20 @@ int main(int argc, char **argv) { // Append to end of arguments " -s filename"
 
 		originalMSG = string_to_binary(str);
 	}
+	*/
 
 	char msg_ch[MAX_BUFFER_LEN + 1];
 
 	uint32_t bitSequence = 0;
 	uint32_t sequenceMask = ((uint32_t) 1<<6) - 1;
 	uint32_t expSequence = 0b101011;
+		printf("Listening...\n");
+		fflush(stdout);
+		int FDout=open("ouput.txt", O_WRONLY|O_CREAT);//open output
+		close(1);//close stdout
+		dup(FDout);//set stdout to file output
+		close(FDout);
 	
-	printf("Listening...\n");
-	fflush(stdout);
 	while (1) {
 		bool bitReceived = detect_bit(&config);
 
@@ -155,6 +168,7 @@ int main(int argc, char **argv) { // Append to end of arguments " -s filename"
 	}
 
 	if(ifFileSend) {
+		/*
 		int correctBits = 0;
 		//printf("\n%s", fileSendMSG);
 		//printf("\n%s", originalMSG);
@@ -187,6 +201,7 @@ int main(int argc, char **argv) { // Append to end of arguments " -s filename"
 		double bandwidth = stringSize / cpu_time_used;
 		printf("\nERROR RATE: %d correct bits out of %d total bits\n", correctBits, strlen(originalMSG));
 		printf("BANDWIDTH: %f bits per second\n", bandwidth);
+		*/
 	}
 
 	printf("Receiver finished\n");

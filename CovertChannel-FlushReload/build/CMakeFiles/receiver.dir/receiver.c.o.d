@@ -1,7 +1,7 @@
 CMakeFiles/receiver.dir/receiver.c.o: \
- /home/sforker1/cs480/cs480project1/CovertChannel-FlushReload/receiver.c \
+ /home/zmarian1/cs480/cs480project1/CovertChannel-FlushReload/receiver.c \
  /usr/include/stdc-predef.h \
- /home/sforker1/cs480/cs480project1/CovertChannel-FlushReload/libs/util.h \
+ /home/zmarian1/cs480/cs480project1/CovertChannel-FlushReload/libs/util.h \
  /usr/include/stdio.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/x86_64-linux-gnu/sys/cdefs.h \
