@@ -86,7 +86,7 @@ int main(int argc, char **argv) { // Append to end of arguments " -s filename"
 	fflush(stdout);
 	if(ifFileSend){
 		if(fork()==0){
-			int FDout=open(filename, O_WRONLY|O_CREAT);//open output
+			int FDout=open(filename, O_WRONLY|O_CREAT|O_TRUNC);//open output
 			close(1);//close stdout
 			dup(FDout);//set stdout to file input
 			close(FDout);
@@ -127,10 +127,32 @@ int main(int argc, char **argv) { // Append to end of arguments " -s filename"
 			// Print out message
 			int ascii_msg_len = binary_msg_len / 8;
 			char msg[ascii_msg_len];
-			if(!ifFileSend)
-				printf("> %s\n", conv_char(msg_ch, ascii_msg_len, msg));
-			else
-				printf("%s \n", conv_char(msg_ch, ascii_msg_len, msg));
+			
+			char* str = conv_char(msg_ch, ascii_msg_len, msg);
+			//int strsize=sizeof &str / sizeof str;
+			/*
+			int newline="«";
+			printf("%s\n", str);
+			printf("%s\n", strtok(str,"«"));
+			char* index=strchr(str,newline);
+			printf("%s\n", strtok(index,"«"));
+			*index=0;
+			index=strchr(str,newline);
+			printf("%s\n", strtok(index,"«"));
+			while(index!=NULL){
+				printf("%s\n", strtok(index,"«"));
+				index=strchr(index,newline);
+				
+			}
+			*/
+			char* token = strtok(str, "«");
+			    // Keep printing tokens while one of the
+			    // delimiters present in str[].
+			    while (token != NULL) {
+				printf("%s\n", token);
+				token = strtok(NULL, "«");
+			    }
+			break;
 			/*
 			if(ifFileSend) {
 				size_t length = strlen(msg_ch)+1;
@@ -140,9 +162,7 @@ int main(int argc, char **argv) { // Append to end of arguments " -s filename"
 			}
 			*/
 			// Terminate loop if received "exit" message
-			if (strcmp(msg, "exit") == 0) {
-				break;
-			}
+			
 		}
 	}
 

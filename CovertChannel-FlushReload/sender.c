@@ -61,25 +61,6 @@ int main(int argc, char **argv) { // Append to end of arguments " -s filename"
 				while ((read_size = read(file, buffer, 512)) > 0){
 					write(1, &buffer, read_size);
 				}
-				
-				/*
-				FILE * fp;
-				    char * line = NULL;
-				    size_t len = 0;
-				    ssize_t read;
-
-				    fp = fopen(filename, "r");
-				    if (fp == NULL)
-					exit(EXIT_FAILURE);
-
-				    while ((read = getline(&line, &len, fp)) != -1) {
-					write(1,&line, read);
-				    }
-
-				    fclose(fp);
-				    if (line)
-					free(line);
-					*/
 				write(1,"exit\n",6);
 				close(file);
 				wait(NULL);
@@ -138,15 +119,15 @@ int main(int argc, char **argv) { // Append to end of arguments " -s filename"
 			}
 		}
 		else{
-			char text_buf[128];
-			fgets(text_buf, sizeof(text_buf), stdin);
 			
 			//char* sent=strtok(text_buf,"«");
 			while(sending){
-	
+				char text_buf[128];
+				fgets(text_buf, sizeof(text_buf), stdin);
 				// Indicate termination if input message is "exit"
 				if (strcmp(text_buf, "exit\n") == 0) {
 					sending = 0;
+					break;
 				}
 				if(ifFileSend)
 					printf("%s",text_buf);

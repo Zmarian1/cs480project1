@@ -1,4 +1,0 @@
-> test
-> second line
-> exit
-Receiver finished
