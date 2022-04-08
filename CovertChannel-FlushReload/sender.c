@@ -145,13 +145,13 @@ int main(int argc, char **argv) { // Append to end of arguments " -s filename"
 			while(sending){
 	
 				// Indicate termination if input message is "exit"
-				if (strcmp(sent, "exit\n") == 0) {
+				if (strcmp(text_buf, "exit\n") == 0) {
 					sending = 0;
 				}
 				if(ifFileSend)
-					printf("%s",sent);
+					printf("%s",text_buf);
 				// Convert that message to binary
-				char *msg = string_to_binary(sent);
+				char *msg = string_to_binary(text_buf);
 
 				// Send a '10101011' bit sequence tell the receiver
 				// a message is going to be sent
