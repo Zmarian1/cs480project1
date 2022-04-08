@@ -1,6 +1,6 @@
 #include "util.h"
 #include <time.h>
-
+#include<sys/wait.h>
 // Cache miss latency threshold
 int CACHE_MISS_LATENCY = 100;
 
@@ -35,56 +35,23 @@ int main(int argc, char **argv) { // Append to end of arguments " -s filename"
 	char* originalMSG = NULL; // Message direct from file
 
 	clock_t start, end;
-    double cpu_time_used; // Time keeping
+    	double cpu_time_used; // Time keeping
 
 	int ifFileSend = 0; //Checks for additional file argument
-	int k = 0;
-	while (k < argc) {
-		if(strcmp(argv[k],"-s") == 0) {
-			ifFileSend = 1;
-		}
-		k++;
-	}
+	char* filename=NULL;
+	
+	if(argc>1)
+		filename=strtok(argv[1]," "); //grab filename
+	if(filename!=NULL)//if filename grabbed
+		ifFileSend=true;//set file send to true
 
 	// Initialize config and local variables
 	struct config config;
 	
-	char file_buf[128];
-
-	if(ifFileSend) { //Grabs additional file argument
-		
-		//char** new_argv = malloc((argc-1) * sizeof *new_argv);
-		//int new_argc = argc - 2;
-		
-		/*
-		for(int i = 0; i < new_argc; i++) {
-			size_t length = strlen(argv[i])+1;
-        	new_argv[i] = malloc(length);
-        	memcpy(new_argv[i], argv[i], length);
-		}
-		new_argv[new_argc] = NULL;
-		
-		strcpy(file_buf, argv[argc - 1]);
-
-		int k = 0;
-		while(k < new_argc) {
-			printf("%s ", new_argv[k]);
-			k++;
-		}
-		//
-		*/
-		char* file_name=strtok(argv[0], " ");
-		printf("\n%s", file_name);
-		
-		//init_config(&config, new_argc, new_argv);
-		init_config(&config, argc, argv);
-		
-	} else {
-		init_config(&config, argc, argv);
-	}
-
-	char *str = NULL; // Entire file contents
+	init_config(&config, argc, argv);
 	/*
+	char *str = NULL; // Entire file contents
+	
 	if(ifFileSend) { // Grabs file for comparison (converts to binary)
 		char buf[4096];
     	ssize_t n;
@@ -115,12 +82,21 @@ int main(int argc, char **argv) { // Append to end of arguments " -s filename"
 	uint32_t bitSequence = 0;
 	uint32_t sequenceMask = ((uint32_t) 1<<6) - 1;
 	uint32_t expSequence = 0b101011;
-		printf("Listening...\n");
-		fflush(stdout);
-		int FDout=open("ouput.txt", O_WRONLY|O_CREAT);//open output
-		close(1);//close stdout
-		dup(FDout);//set stdout to file output
-		close(FDout);
+	printf("Listening...\n");
+	fflush(stdout);
+	if(ifFileSend){
+		if(fork()==0){
+			int FDout=open(filename, O_WRONLY|O_CREAT);//open output
+			close(1);//close stdout
+			dup(FDout);//set stdout to file input
+			close(FDout);
+		}
+		else{
+			wait(NULL);
+			printf("File %s received\n",filename);
+			return 0;
+		}
+	}
 	
 	while (1) {
 		bool bitReceived = detect_bit(&config);
@@ -151,15 +127,18 @@ int main(int argc, char **argv) { // Append to end of arguments " -s filename"
 			// Print out message
 			int ascii_msg_len = binary_msg_len / 8;
 			char msg[ascii_msg_len];
-			printf("> %s\n", conv_char(msg_ch, ascii_msg_len, msg));
-
+			if(!ifFileSend)
+				printf("> %s\n", conv_char(msg_ch, ascii_msg_len, msg));
+			else
+				printf("%s \n", conv_char(msg_ch, ascii_msg_len, msg));
+			/*
 			if(ifFileSend) {
 				size_t length = strlen(msg_ch)+1;
         		fileSendMSG = malloc(length);
         		memcpy(fileSendMSG, msg_ch, length);
 				break;
 			}
-	
+			*/
 			// Terminate loop if received "exit" message
 			if (strcmp(msg, "exit") == 0) {
 				break;
@@ -203,8 +182,8 @@ int main(int argc, char **argv) { // Append to end of arguments " -s filename"
 		printf("BANDWIDTH: %f bits per second\n", bandwidth);
 		*/
 	}
-
-	printf("Receiver finished\n");
+	if(!ifFileSend)
+		printf("Receiver finished\n");
 	return 0;
 }
 
