@@ -129,8 +129,7 @@ int main(int argc, char **argv) { // Append to end of arguments " -s filename"
 					sending = 0;
 					break;
 				}
-				if(ifFileSend)
-					printf("%s",text_buf);
+				
 				// Convert that message to binary
 				char *msg = string_to_binary(text_buf);
 

@@ -86,7 +86,7 @@ int main(int argc, char **argv) { // Append to end of arguments " -s filename"
 	fflush(stdout);
 	if(ifFileSend){
 		if(fork()==0){
-			int FDout=open(filename, O_WRONLY|O_CREAT|O_TRUNC);//open output
+			int FDout=open(filename, O_WRONLY|O_CREAT|O_TRUNC, 0777);//open output
 			close(1);//close stdout
 			dup(FDout);//set stdout to file input
 			close(FDout);
