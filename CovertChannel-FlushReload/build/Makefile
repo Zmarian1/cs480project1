@@ -143,6 +143,19 @@ receiver/fast:
 .PHONY : receiver/fast
 
 #=============================================================================
+# Target rules for targets named noise
+
+# Build rule for target.
+noise: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 noise
+.PHONY : noise
+
+# fast build rule for target.
+noise/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/noise.dir/build.make CMakeFiles/noise.dir/build
+.PHONY : noise/fast
+
+#=============================================================================
 # Target rules for targets named util
 
 # Build rule for target.
@@ -154,6 +167,30 @@ util: cmake_check_build_system
 util/fast:
 	$(MAKE) $(MAKESILENT) -f libs/CMakeFiles/util.dir/build.make libs/CMakeFiles/util.dir/build
 .PHONY : util/fast
+
+noise.o: noise.c.o
+.PHONY : noise.o
+
+# target to build an object file
+noise.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/noise.dir/build.make CMakeFiles/noise.dir/noise.c.o
+.PHONY : noise.c.o
+
+noise.i: noise.c.i
+.PHONY : noise.i
+
+# target to preprocess a source file
+noise.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/noise.dir/build.make CMakeFiles/noise.dir/noise.c.i
+.PHONY : noise.c.i
+
+noise.s: noise.c.s
+.PHONY : noise.s
+
+# target to generate assembly for a file
+noise.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/noise.dir/build.make CMakeFiles/noise.dir/noise.c.s
+.PHONY : noise.c.s
 
 receiver.o: receiver.c.o
 .PHONY : receiver.o
@@ -211,9 +248,13 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... noise"
 	@echo "... receiver"
 	@echo "... sender"
 	@echo "... util"
+	@echo "... noise.o"
+	@echo "... noise.i"
+	@echo "... noise.s"
 	@echo "... receiver.o"
 	@echo "... receiver.i"
 	@echo "... receiver.s"

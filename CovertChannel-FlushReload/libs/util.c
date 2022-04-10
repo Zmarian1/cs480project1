@@ -142,7 +142,7 @@ void init_config(struct config *config, int argc, char **argv)
 	//      -i is used to specify the sending interval rate
 	//      -o is used to specify the shared file offset
 	int option;
-	while ((option = getopt(argc, argv, "i:o:f:")) != -1) {
+	while ((option = getopt(argc, argv, "i:o:f:s;")) != -1) {
 		switch (option) {
 			case 'i':
 				config->interval = atoi(optarg);
@@ -156,6 +156,8 @@ void init_config(struct config *config, int argc, char **argv)
 			case 'h':
 				print_help();
 				exit(1);
+			case 's':
+				break;
 			case '?':
 				fprintf(stderr, "Unknown option character\n");
 				print_help();
@@ -183,5 +185,6 @@ void init_config(struct config *config, int argc, char **argv)
 
 		config->addr = (ADDR_PTR) mapaddr + offset;
 	}
+	config->sharedFileName = filename;
 }
 

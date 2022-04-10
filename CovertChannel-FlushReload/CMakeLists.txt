@@ -11,3 +11,6 @@ target_link_libraries (sender LINK_PUBLIC util)
 add_executable (receiver receiver.c)
 target_link_libraries (receiver LINK_PUBLIC util)
 
+add_executable (noise noise.c)
+target_link_libraries (noise LINK_PUBLIC util)
+

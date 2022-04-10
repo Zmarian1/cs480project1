@@ -2,3 +2,4 @@ hello jenn
 this is a file
 i am spying on yur file
 hehe. 
+exit
