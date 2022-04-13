@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
     //printf("file end offset: %i\n", end_of);
 
     int j = 0;
-    sleep(20);
+    sleep(10);
     for(int k = 0; k < 5; k++){
         for(uint64_t i = config.addr; j < 4096; j += 10){
             ADDR_PTR newAddr = (ADDR_PTR) mapaddr + j;
@@ -41,6 +41,18 @@ int main(int argc, char **argv) {
             // printf("time taken to access location %i: %i\n", newAddr, time);
         }
     }
+    // Sync with sender
+	CYCLES start_t = cc_sync();
+	while ((get_time() - start_t) < config.interval) {
+		
+		CYCLES access_time = measure_one_block_access_time(config.addr); 
+		for(uint64_t i = config.addr; j < 4096; j += 10){
+            ADDR_PTR newAddr = (ADDR_PTR) mapaddr + j;
+            access_mem(newAddr); // access some memory 
+            uint32_t time = measure_one_block_access_time(newAddr); //measure time to acess memory
+            // printf("time taken to access location %i: %i\n", newAddr, time);
+        }
+	}
 
     
     // access_mem(config.addr);
