@@ -7,6 +7,8 @@
 #include <math.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <fstream>
+#include <string>
 using namespace std;
 using namespace std::chrono;
 #include <immintrin.h>
@@ -25,8 +27,8 @@ const int NUM_TROJAN_THREADS = 4;
 const int RECV_SIDE_RNGOP_CNT = 4;
 const int RECV_SIDE_PAUSE_CNT = 16;
 const int RECV_SIDE_SAMPLE_CNT = 2048;
-double SEND_PRIME_PERIOD  = 0.5;
-double RECV_PROBE_PERIOD  = 0.5;
+double SEND_PRIME_PERIOD  = .5;
+double RECV_PROBE_PERIOD  = .5;
 const double RECV_SYNC_PERIOD   = 0.5;
 const double SEND_SYNC_PERIOD   = 0.5;
 double CLASSIFICATION_THRESHOLD   = 0.002;
@@ -51,6 +53,8 @@ void SYNC_START()
 void transmission_quality_report(string expected_str, double * probe_results, double elapsed_time)
 {
     int j=0;
+    int wrong = 0, total = 0;
+
     for(auto & c : expected_str) {
         short received = 0;
         if(verbose)
@@ -64,8 +68,13 @@ void transmission_quality_report(string expected_str, double * probe_results, do
         }
         if(!verbose) continue;
         cout << "---- received: " << (char) received <<endl;
+        if ( received != c){
+            wrong++;
+        }
+        total++;
     }
-    
+    cout << "ERROR RATE: " << (float(wrong)/float(total)) * 100 << endl;
+    cout << "BANDWIDTH: " << float(total/elapsed_time) << endl;
     cout << " DONE!" ;
 }
 
@@ -200,7 +209,8 @@ void setup(int argc, char**argv)
         isolation_mode      = "thread";
         CLASSIFICATION_THRESHOLD   = 0.5;
     }
-    else if(argc == 7) {
+    else if(argc == 7 ) {
+
         seperate_process = string(argv[1]) == "process";
         if(!seperate_process && string(argv[1]) != "thread") {
             usage();
@@ -221,6 +231,7 @@ void setup(int argc, char**argv)
         usage();
         exit(-1);
     }
+
     msg = secret_string;
     probe_timings = (double *) malloc (sizeof(double) * 8*msg.size());
     elapsed_time = 0.0;
