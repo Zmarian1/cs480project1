@@ -53,7 +53,8 @@ void SYNC_START()
 void transmission_quality_report(string expected_str, double * probe_results, double elapsed_time)
 {
     int j=0;
-    int wrong = 0, total = 0;
+    int sent = 0;
+    int wrong = 0, totalBits = 0;
 
     for(auto & c : expected_str) {
         short received = 0;
@@ -65,16 +66,18 @@ void transmission_quality_report(string expected_str, double * probe_results, do
             int decoded_bit     = bit_delay >= CLASSIFICATION_THRESHOLD;
             int encoded_bit     = (c >> bit) & 1;
             received |= (decoded_bit << bit);
+            totalBits++;
         }
         if(!verbose) continue;
         cout << "---- received: " << (char) received <<endl;
         if ( received != c){
             wrong++;
         }
-        total++;
+        sent++;
     }
-    cout << "ERROR RATE: " << (float(wrong)/float(total)) * 100 << endl;
-    cout << "BANDWIDTH: " << float(total/elapsed_time) << endl;
+    cout << "ERROR RATE: " << (float(wrong)/float(sent)) * 100 << endl;
+    cout << "BANDWIDTH: " << float(totalBits/elapsed_time) << endl;
+    cout << "LATENCY: " << elapsed_time << endl;
     cout << " DONE!" ;
 }
 
