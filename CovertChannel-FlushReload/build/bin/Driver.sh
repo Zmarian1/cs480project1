@@ -1,5 +1,7 @@
 #!/bin/bash
 # runs 10 loops of send/receive on test.txt compares and outputs
+rm bandwidth.txt
+touch bandwidth.txt
 s=10
 for ((i = 0 ; i < $1 ; i++)); do
   if [ "$i" -lt "$s" ]; then
