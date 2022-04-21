@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/zmarian1/cs480/cs480project1/CovertChannel-FlushReload
+CMAKE_SOURCE_DIR = /home/sforker1/cs480/cs480project1/CovertChannel-FlushReload
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/zmarian1/cs480/cs480project1/CovertChannel-FlushReload/build
+CMAKE_BINARY_DIR = /home/sforker1/cs480/cs480project1/CovertChannel-FlushReload/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/zmarian1/cs480/cs480project1/CovertChannel-FlushReload/build/CMakeFiles /home/zmarian1/cs480/cs480project1/CovertChannel-FlushReload/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sforker1/cs480/cs480project1/CovertChannel-FlushReload/build/CMakeFiles /home/sforker1/cs480/cs480project1/CovertChannel-FlushReload/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/zmarian1/cs480/cs480project1/CovertChannel-FlushReload/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sforker1/cs480/cs480project1/CovertChannel-FlushReload/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
