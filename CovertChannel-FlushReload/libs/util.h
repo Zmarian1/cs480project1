@@ -30,7 +30,7 @@
 #define DEFAULT_FILE_OFFSET	0x0
 #define DEFAULT_FILE_SIZE	4096
 #define CACHE_BLOCK_SIZE	64
-#define MAX_BUFFER_LEN	1024
+#define MAX_BUFFER_LEN	8192
 
 
 struct config {
