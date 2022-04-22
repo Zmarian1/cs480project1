@@ -31,6 +31,8 @@ int main(int argc, char **argv) { // Append to end of arguments " -s filename"
 	//TODO Error for argc < 2
 	setbuf(stdout, NULL);
 
+	FILE *fptr = fopen("bandwidth.txt", "a");
+
 	char* fileSendMSG = NULL; // Message from channel
 	char* originalMSG = NULL; // Message direct from file
 
@@ -70,9 +72,7 @@ int main(int argc, char **argv) { // Append to end of arguments " -s filename"
         	len += n;
         	str[len] = '\0';
     	}
-
 		// Binary Conversion
-
 		originalMSG = string_to_binary(str);
 	}
 	*/
@@ -167,44 +167,47 @@ int main(int argc, char **argv) { // Append to end of arguments " -s filename"
 	}
 
 	if(ifFileSend) {
-		/*
-		int correctBits = 0;
-		//printf("\n%s", fileSendMSG);
-		//printf("\n%s", originalMSG);
+		char *str = NULL;
+		char buf[4096];
+    	ssize_t n;
+	    size_t len = 0;
+		int file;
+		file = open(filename, O_RDONLY);
+    	while (n = read(file, buf, sizeof buf)) {
+        	if (n < 0) {
+            	if (errno == EAGAIN)
+                	continue;
+            	perror("read");
+            	break;
+        	}
+        	str = realloc(str, len + n + 1);
+        	memcpy(str + len, buf, n);
+        	len += n;
+        	str[len] = '\0';
+    	}
 
-		char* longestString = NULL; //Used so there won't be two for loops, avoids seg fault
-		char* shortestString = NULL;
+		// Binary Conversion
 
-		if(strlen(fileSendMSG) > strlen(originalMSG)) {
-			shortestString = originalMSG;
-			longestString = fileSendMSG;
-		} else {
-			shortestString = fileSendMSG;
-			longestString = originalMSG;
-		}
+		originalMSG = string_to_binary(str);
+
+		char* shortestString = originalMSG;
 
 		double stringSize = 0; // Used over cast of strlen()
-		char character2 = *longestString;
 		for (char character = *shortestString; character != '\0'; character = *++shortestString) {
-    		if(character == character2) {
-				correctBits++;
-			}
 			stringSize++;
-			character2 = *++longestString;
 		}
-
-		//printf("\nLengths are %d and %d\n", strlen(originalMSG), strlen(fileSendMSG));
+		fprintf(fptr, "\nLengths are %d\n", strlen(originalMSG));
 		//printf("\n\nTHE SENT FILE WAS: %s", fileSendMSG);
+
+		stringSize = (int) strlen(originalMSG);
 
 		cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
 		double bandwidth = stringSize / cpu_time_used;
-		printf("\nERROR RATE: %d correct bits out of %d total bits\n", correctBits, strlen(originalMSG));
-		printf("BANDWIDTH: %f bits per second\n", bandwidth);
-		*/
+		//printf("\nERROR RATE: %d correct bits out of %d total bits\n", correctBits, strlen(originalMSG));
+		fprintf(fptr, "BANDWIDTH: %f bits per second\n", bandwidth);
+		fclose(fptr);
 	}
 	if(!ifFileSend)
 		printf("Receiver finished\n");
 	return 0;
 }
-
-

@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/noise.dir/noise.c.o -o bin/noise  libs/libutil.a 

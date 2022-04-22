@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/sforker1/cs480/cs480project1/CovertChannel-FlushReload
+CMAKE_SOURCE_DIR = /home/jseiber1/cs480/projectFinal/cs480project1/CovertChannel-FlushReload
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/sforker1/cs480/cs480project1/CovertChannel-FlushReload/build
+CMAKE_BINARY_DIR = /home/jseiber1/cs480/projectFinal/cs480project1/CovertChannel-FlushReload/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sforker1/cs480/cs480project1/CovertChannel-FlushReload/build/CMakeFiles /home/sforker1/cs480/cs480project1/CovertChannel-FlushReload/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jseiber1/cs480/projectFinal/cs480project1/CovertChannel-FlushReload/build/CMakeFiles /home/jseiber1/cs480/projectFinal/cs480project1/CovertChannel-FlushReload/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sforker1/cs480/cs480project1/CovertChannel-FlushReload/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jseiber1/cs480/projectFinal/cs480project1/CovertChannel-FlushReload/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -143,6 +143,19 @@ receiver/fast:
 .PHONY : receiver/fast
 
 #=============================================================================
+# Target rules for targets named noise
+
+# Build rule for target.
+noise: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 noise
+.PHONY : noise
+
+# fast build rule for target.
+noise/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/noise.dir/build.make CMakeFiles/noise.dir/build
+.PHONY : noise/fast
+
+#=============================================================================
 # Target rules for targets named util
 
 # Build rule for target.
@@ -154,6 +167,30 @@ util: cmake_check_build_system
 util/fast:
 	$(MAKE) $(MAKESILENT) -f libs/CMakeFiles/util.dir/build.make libs/CMakeFiles/util.dir/build
 .PHONY : util/fast
+
+noise.o: noise.c.o
+.PHONY : noise.o
+
+# target to build an object file
+noise.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/noise.dir/build.make CMakeFiles/noise.dir/noise.c.o
+.PHONY : noise.c.o
+
+noise.i: noise.c.i
+.PHONY : noise.i
+
+# target to preprocess a source file
+noise.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/noise.dir/build.make CMakeFiles/noise.dir/noise.c.i
+.PHONY : noise.c.i
+
+noise.s: noise.c.s
+.PHONY : noise.s
+
+# target to generate assembly for a file
+noise.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/noise.dir/build.make CMakeFiles/noise.dir/noise.c.s
+.PHONY : noise.c.s
 
 receiver.o: receiver.c.o
 .PHONY : receiver.o
@@ -211,9 +248,13 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... noise"
 	@echo "... receiver"
 	@echo "... sender"
 	@echo "... util"
+	@echo "... noise.o"
+	@echo "... noise.i"
+	@echo "... noise.s"
 	@echo "... receiver.o"
 	@echo "... receiver.i"
 	@echo "... receiver.s"

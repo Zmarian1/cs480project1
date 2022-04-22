@@ -5,3 +5,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set_source_files_properties(drng.cpp PROPERTIES COMPILE_FLAGS -m32)
 set_source_files_properties(drng.cpp PROPERTIES COMPILE_FLAGS -pthread)
 set_source_files_properties(drng.cpp PROPERTIES COMPILE_FLAGS "-mrdseed -pthread")
+
+
+add_executable (noise noise.cpp)
+set_source_files_properties(noise.cpp PROPERTIES COMPILE_FLAGS "-mrdrnd -mrdseed")
