@@ -146,6 +146,11 @@ int main(int argc, char **argv) { // Append to end of arguments " -s filename"
 			}
 			*/
 			char* token = strtok(str, "«");
+			if(token==NULL){
+				printf("%s\n", str);
+				break;
+			}
+				
 			    // Keep printing tokens while one of the
 			    // delimiters present in str[].
 			    while (token != NULL) {
@@ -196,7 +201,11 @@ int main(int argc, char **argv) { // Append to end of arguments " -s filename"
 		for (char character = *shortestString; character != '\0'; character = *++shortestString) {
 			stringSize++;
 		}
+<<<<<<< HEAD
 		fprintf(fptr, "\nLengths are %d\n", strlen(originalMSG));
+=======
+		//fprintf(fptr, "\nLengths are %d\n", strlen(originalMSG));
+>>>>>>> Zachrandom
 		//printf("\n\nTHE SENT FILE WAS: %s", fileSendMSG);
 
 		stringSize = (int) strlen(originalMSG);
@@ -204,10 +213,19 @@ int main(int argc, char **argv) { // Append to end of arguments " -s filename"
 		cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
 		double bandwidth = stringSize / cpu_time_used;
 		//printf("\nERROR RATE: %d correct bits out of %d total bits\n", correctBits, strlen(originalMSG));
+<<<<<<< HEAD
 		fprintf(fptr, "BANDWIDTH: %f bits per second\n", bandwidth);
+=======
+		fprintf(fptr, "%f\n", bandwidth);
+>>>>>>> Zachrandom
 		fclose(fptr);
 	}
 	if(!ifFileSend)
 		printf("Receiver finished\n");
 	return 0;
+<<<<<<< HEAD
 }
+=======
+}
+
+>>>>>>> Zachrandom

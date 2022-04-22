@@ -6,6 +6,7 @@
 #include <future>
 #include <math.h>
 #include <sys/types.h>
+#include <cstring>
 #include <unistd.h>
 #include <fstream>
 #include <string>
@@ -22,7 +23,8 @@ using namespace std::chrono;
 #endif
 
 
-const char * secret_string = "hello, world!";
+//const char * secret_string = "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.";
+const char * secret_string = "Hello World";
 const int NUM_TROJAN_THREADS = 4;
 const int RECV_SIDE_RNGOP_CNT = 4;
 const int RECV_SIDE_PAUSE_CNT = 16;
@@ -34,12 +36,16 @@ const double SEND_SYNC_PERIOD   = 0.5;
 double CLASSIFICATION_THRESHOLD   = 0.002;
 bool seperate_process = false;
 bool verbose = false;
+int error=0;
 bool dump_probe_timings = false;
 string isolation_mode = "thread";
 string msg;
 double elapsed_time;
 double *probe_timings;
 string verbose_mode = "summary-only";
+clock_t start;
+clock_t end;
+    	double cpu_time_used; // Time keeping
 
 //Synchronize threads...
 static atomic_int rdy;
@@ -70,15 +76,37 @@ void transmission_quality_report(string expected_str, double * probe_results, do
         }
         if(!verbose) continue;
         cout << "---- received: " << (char) received <<endl;
+<<<<<<< HEAD
         if ( received != c){
             wrong++;
         }
         sent++;
+=======
+        char exp=(char) c;
+        char rec=(char) received;
+        if(!strcmp(&exp, &rec)){
+            error++;
+        }
+>>>>>>> Zachrandom
     }
     cout << "ERROR RATE: " << (float(wrong)/float(sent)) * 100 << endl;
     cout << "BANDWIDTH: " << float(totalBits/elapsed_time) << endl;
     cout << "LATENCY: " << elapsed_time << endl;
     cout << " DONE!" ;
+
+    clock_t end = clock();
+    cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    double bandwidth = strlen(secret_string)/ cpu_time_used;
+    float Error_rate=((float)error/(strlen(secret_string)))*100;
+    FILE *output;
+    output=fopen("output.txt", "a");
+    if(output==NULL) {
+        perror("Error opening file.");
+    }
+    else {
+        fprintf(output,"%.2f Error rate\n %f Bandwidth\n",Error_rate, bandwidth);   
+    }
+        fclose(output);
 }
 
 void prime_one(void)
@@ -245,7 +273,8 @@ void setup(int argc, char**argv)
 }
 int main(int argc, char**argv) {
     setup(argc,argv);
-
+    
+    start = clock();
     if(!seperate_process) {
         elapsed_time = bcast_secret_str(msg, probe_timings);
         transmission_quality_report(secret_string,probe_timings,elapsed_time);
@@ -266,4 +295,9 @@ int main(int argc, char**argv) {
     elapsed_time = r1.get();
     transmission_quality_report(secret_string,probe_timings,elapsed_time);
     free(probe_timings);
+<<<<<<< HEAD
 }
+=======
+    
+}
+>>>>>>> Zachrandom
