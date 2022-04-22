@@ -1,15 +1,5 @@
-
-Lengths are 112
-BANDWIDTH: 1719.188911 bits per second
-
-Lengths are 112
-BANDWIDTH: 1705.471213 bits per second
-
-Lengths are 112
-BANDWIDTH: 1747.106355 bits per second
-
-Lengths are 96
-BANDWIDTH: 1740.360037 bits per second
-
-Lengths are 96
-BANDWIDTH: 1740.517804 bits per second
+1882.781996
+1875.379552
+1867.901557
+1884.626015
+1864.246598

@@ -50,11 +50,21 @@ int compareFiles(FILE *fp1, FILE *fp2,int len)
 int main(int argc, char *argv[]){
     int comp;
     comp=atoi(argv[1]);
+    int bandwidth;
     printf("Compareing %d times\n",comp);
     int errors=0,totalerrors=0;
     long filelen=0;
     float percent=0;
     FILE *fp2;
+    FILE * band;
+    char * band_input = NULL;
+    size_t len = 0;
+    ssize_t read;
+    int lowest=-1;
+    int lowest_band=0;
+    band = fopen("bandwidth.txt", "r");
+    if (band == NULL)
+        exit(EXIT_FAILURE);
     char FileNo_tens;
     char FileNo_ones;
     // opening both file in read only mode
@@ -86,6 +96,8 @@ int main(int argc, char *argv[]){
        		exit(0);
     	}
     	printf("Comparing file %s\n",output);
+        read = getline(&band_input, &len, band);
+        bandwidth=atoi(band_input);
     	errors=compareFiles(fp1, fp2,filelen);
     	if(errors>0){
     		percent+=((float)errors/filelen)*100;
@@ -93,15 +105,30 @@ int main(int argc, char *argv[]){
     		
     	}
     	printf("File %s had %d errors\n",output,errors);
+        printf("Total Bandwidth %d\n",bandwidth);
+        if(lowest>0){
+            if(errors<lowest){
+                lowest=errors;
+                lowest_band=bandwidth;
+            }
+        }
+        else{
+            lowest=errors;
+            lowest_band=bandwidth;
+        }
     	fclose(fp2);
     	 fclose(fp1);
+
     }
     // closing both file
     printf("File Length %d\n",filelen);
     printf("Total Errors %d\n",totalerrors);
     percent/=comp;
-    
+    fclose(band);
     printf("Error rate of %.2f percent\n",percent);
+    float lowest_rate;
+    lowest_rate=((float)lowest/filelen)*100;
+    printf("Lowest error rate of %.2f with band with %d\n",lowest_rate,lowest_band);
     return 0;
 }
 

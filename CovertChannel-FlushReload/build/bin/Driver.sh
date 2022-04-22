@@ -18,4 +18,4 @@ for ((i = 0 ; i < $1 ; i++)); do
   wait $BACK_PID
   
 done
-./compare $1
+./compare $1 test.txt
