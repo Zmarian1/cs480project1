@@ -1,8 +1,0 @@
-100.00 Error rate
- 0.834391 Bandwidth
-0.00 Error rate
- 0.834597 Bandwidth
-100.00 Error rate
- 0.834644 Bandwidth
-0.00 Error rate
- 0.834424 Bandwidth

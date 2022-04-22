@@ -1,1 +1,0 @@
-/usr/bin/cc CMakeFiles/receiver.dir/receiver.c.o -o bin/receiver  libs/libutil.a 
