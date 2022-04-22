@@ -36,6 +36,7 @@
 struct config {
 	ADDR_PTR addr;
 	int interval;
+	char * sharedFileName;
 };
 
 CYCLES measure_one_block_access_time(ADDR_PTR addr);

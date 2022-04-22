@@ -1,4 +1,4 @@
-# Install script for directory: /home/sforker1/cs480/cs480project1/CovertChannel-FlushReload
+# Install script for directory: /home/jseiber1/cs480/projectFinal/cs480project1/CovertChannel-FlushReload
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,7 +44,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/sforker1/cs480/cs480project1/CovertChannel-FlushReload/build/libs/cmake_install.cmake")
+  include("/home/jseiber1/cs480/projectFinal/cs480project1/CovertChannel-FlushReload/build/libs/cmake_install.cmake")
 
 endif()
 
@@ -56,5 +56,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/sforker1/cs480/cs480project1/CovertChannel-FlushReload/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/jseiber1/cs480/projectFinal/cs480project1/CovertChannel-FlushReload/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
